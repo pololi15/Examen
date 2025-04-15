@@ -2,22 +2,23 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.kapt)
+    alias(libs.plugins.hilt)
+    alias(libs.plugins.kotlinSerialization)
 }
-
 android {
-    namespace = "com.ucb.examen"
+    namespace = "com.ucb.ucbtest"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.ucb.examen"
-        minSdk = 35
-        targetSdk = 35
+        applicationId = "com.ucb.ucbtest"
+        minSdk = 24
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
-
     buildTypes {
         release {
             isMinifyEnabled = false
@@ -28,19 +29,17 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
     }
     kotlinOptions {
-        jvmTarget = "11"
+        jvmTarget = "1.8"
     }
     buildFeatures {
         compose = true
     }
 }
-
 dependencies {
-
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
@@ -56,4 +55,29 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
+    implementation(libs.androidx.runtime.livedata)
+    debugImplementation(libs.leakcanary.android)
+    implementation(libs.navigation)
+    implementation(libs.hilt.navigation)
+    implementation(libs.kotlinx.coroutines.core) // Para Flow
+    implementation(libs.coil)
+    implementation(libs.hilt)
+    kapt(libs.hilt.compiler)
+    androidTestImplementation(libs.hilt.test)
+    kaptAndroidTest(libs.hilt.compiler)
+
+    //serialization
+    implementation(libs.kotlinx.serialization.json)
+
+
+    implementation(project(":usecases"))
+    implementation(project(":domain"))
+    implementation(project(":data"))
+    implementation(project(":framework"))
+
+}
+
+kapt {
+    correctErrorTypes = true
 }
